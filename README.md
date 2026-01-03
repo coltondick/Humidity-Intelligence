@@ -2,7 +2,7 @@
 
 Smart humidity intelligence for Home Assistant – badges, comfort band and 24-hour multi-room chart.
 
-> Version: **v1.0.0**
+> Version: **v1.0.1**
 
 ![IMG_5368](https://github.com/user-attachments/assets/8ce3f56c-f232-4be6-a941-5b31a2983387) 
 
@@ -211,7 +211,24 @@ If you like to keep your Lovelace in files:
 
 ## 5. Customisation
 
-### Colour thresholds and glow
+In `humidity_intelligence.yaml`, find the `House Average Humidity` sensor and **replace the example entities** with your actual humidity sensors:
+
+```yaml
+{% set rooms = [
+  'sensor.living_room_humidity',      # ← change to your entity IDs
+  'sensor.kitchen_humidity',
+  'sensor.hallway_humidity',
+  'sensor.bedroom_humidity',
+  'sensor.kids_room_humidity',
+  'sensor.bathroom_humidity',
+  'sensor.toilet_humidity'
+] %}
+
+```
+If you don’t change these, the package will still load, but
+sensor.house_average_humidity will see them as unknown and will throw a numeric value error.### Colour thresholds and glow
+
+---
 
 The badge borders and glows are driven by inline JavaScript in `button-card` styles.
 If you want to change the thresholds (e.g. what counts as “Danger” or “Watch”), edit the relevant `if` blocks in the card YAML.
