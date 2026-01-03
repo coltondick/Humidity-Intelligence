@@ -1,7 +1,7 @@
 type: vertical-stack
 cards:
   ###########################################################################
-  # Top row – Humidity, Condensation, Mould, Drift badges v1.0.0
+  # Top row – Humidity, Condensation, Mould, Drift badges v1.0.1
   ###########################################################################
   - type: horizontal-stack
     cards:
