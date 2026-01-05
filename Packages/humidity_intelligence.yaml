@@ -1,6 +1,6 @@
 ###############################################################################
 # Package: humidity_intelligence.yaml
-# Versions:v1.0.1
+# Version: v1.0.2
 # Humidity Intelligence – core backend
 # - House average humidity + comfort band
 # - 7-day drift
@@ -52,7 +52,6 @@ template:
             'sensor.bathroom_humidity',
             'sensor.toilet_humidity'
           ] %}
-
           {% set vals = [] %}
           {% for e in rooms %}
             {% set s = states(e) %}
@@ -60,12 +59,10 @@ template:
               {% set vals = vals + [ s|float ] %}
             {% endif %}
           {% endfor %}
-
           {% if vals|length == 0 %}
-            {# No usable data yet – reuse last numeric value (or 0 on first boot) #}
-            {{ states(this.entity_id) | float(0) }}
+            unknown
           {% else %}
-            {{ (vals | sum / vals | length) | round(1) }}
+            {{ (vals|sum / vals|length)|round(1) }}
           {% endif %}
 
       #########################################################################
@@ -235,6 +232,14 @@ template:
         state: >
           {% set risk = state_attr('sensor.worst_room_condensation', 'risk') %}
           {{ risk in ['Risk', 'Danger'] }}
+
+      - name: Mould Danger
+        unique_id: humidity_intelligence_mould_danger
+        device_class: problem
+        state: >
+          {% set risk = state_attr('sensor.worst_room_mould', 'risk') %}
+          {{ risk in ['Risk', 'Danger'] }}
+
 
       - name: Mould Danger
         unique_id: humidity_intelligence_mould_danger
